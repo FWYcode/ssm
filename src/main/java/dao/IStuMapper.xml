@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IStuMapper">
+	<select id="selectById" parameterType="Student" resultType="Student">
+		select *
+		from STUS where ID=#{id}
+	</select>
+	<select id="selectByActive" parameterType="Student" resultType="Student">
+		select ID,SNAME,CLZ from STUS
+		<where>
+			<if test="id!=null and id!=''">AND ID=#{id}</if>
+			<if test="sname!=null and sname!=''">AND SNAME=#{sname}</if>
+			<if test="clz!=null and clz!=''">AND CLZ=#{clz}</if>
+			<if test="pass!=null and pass!=''"> AND PASS=#{pass}</if>
+		</where>
+	</select>
+	<select id="selectAll" resultType="Student">
+		select ID,SNAME,CLZ from STUS
+	</select>
+	<insert id="saveStu" parameterType="Student">
+		insert into
+		STUS(SNAME,CLZ,PASS)values(#{sname},#{clz},#{pass})
+	</insert>
+	<update id="updateStuActive" parameterType="Student">
+		update STUS
+		<set>
+			<if test="sname!=null and sname!=''">SNAME=#{sname},</if>
+			<if test="clz!=null and clz!=''">CLZ=#{clz},</if>
+			<if test="pass!=null and pass!=''">PASS=#{pass},</if>
+		</set>
+		<where>Id=#{id}</where>
+	</update>
+	<delete id="deleteStu" parameterType="Student">
+		delete from STUS where ID=#{id}
+	</delete>
+	<select id="selectByName" parameterType="Student" resultType="Student">
+		select *
+		from STUS where SNAME=#{sname}
+	</select>
+
+</mapper>
